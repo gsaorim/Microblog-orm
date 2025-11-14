@@ -16,10 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Conectar ao MongoDB
-mongoose.connect('mongodb://admin:admin123@localhost:27017/microblog?authSource=admin', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect('mongodb://admin:admin123@mongodb:27017/microblog?authSource=admin')
 .then(() => console.log('Conectado ao MongoDB'))
 .catch(err => console.log('Erro ao conectar MongoDB:', err));
 
@@ -89,3 +86,4 @@ app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
   console.log(`Acesse: http://localhost:${PORT}`);
 });
+
