@@ -15,15 +15,12 @@ services:
   microblog-app:
     build: .
     container_name: microblog-app
-    command: node server.js
     ports:
       - 3000:3000
     environment:
       - MONGO_URI=mongodb://admin:admin123@mongodb:27017/microblog?authSource=admin
     depends_on:
       - mongodb
-    volumes:
-      - .:/usr/src/app
 
 volumes:
   mongo_data:
