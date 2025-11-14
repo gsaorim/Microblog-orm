@@ -25,21 +25,22 @@ git clone https://github.com/gsaorim/Microblog-orm.git
 cd Microblog-orm
 
 ### 2. Execute a aplicação
-#### Parar containers existentes (se houver)
-docker-compose down
+Parar containers existentes (se houver)
+#### docker-compose down
 
-#Reconstruir e executar
-docker-compose up -d
+Reconstruir e executar
+#### docker-compose up -d
 
 ### 3. Verifique se está funcionando
-# Ver os logs da aplicação
-docker logs microblog-app
+Ver os logs da aplicação
+#### docker logs microblog-app
 
-# Verifique se os containers estão rodando
-docker ps
+Verifique se os containers estão rodando
+#### docker ps
 
 ### 4. Acesse a aplicação
-# Abra no navegador: http://localhost:3000
+#### Abra no navegador: http://localhost:3000
+
 
 
 
