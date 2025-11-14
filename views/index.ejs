@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microblog</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <a href="/">🐦 Microblog</a>
+            </h1>
+            <nav class="nav">
+                <% if (user) { %>
+                    <span class="welcome">Olá, <strong>@<%= user.username %></strong></span>
+                    <form action="/auth/logout" method="POST" class="logout-form">
+                        <button type="submit" class="btn btn-outline">Sair</button>
+                    </form>
+                <% } else { %>
+                    <div class="auth-links">
+                        <a href="/auth/login" class="btn btn-outline">Entrar</a>
+                        <a href="/auth/register" class="btn btn-primary">Registrar</a>
+                    </div>
+                <% } %>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <% if (success) { %>
+                <div class="alert alert-success">
+                    <%= success %>
+                </div>
+            <% } %>
+            
+            <% if (error) { %>
+                <div class="alert alert-error">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <% if (user) { %>
+                <section class="create-post">
+                    <h2>O que está acontecendo?</h2>
+                    <form action="/posts" method="POST" class="post-form">
+                        <textarea 
+                            name="content" 
+                            placeholder="Compartilhe seus pensamentos..." 
+                            maxlength="280"
+                            required
+                        ></textarea>
+                        <div class="form-footer">
+                            <span class="char-count">0/280</span>
+                            <button type="submit" class="btn btn-primary">Postar</button>
+                        </div>
+                    </form>
+                </section>
+            <% } %>
+
+            <section class="posts">
+                <h2>Posts Recentes</h2>
+                
+                <% if (posts.length === 0) { %>
+                    <div class="empty-state">
+                        <p>Nenhum post ainda. Seja o primeiro a postar!</p>
+                    </div>
+                <% } else { %>
+                    <% posts.forEach(post => { %>
+                        <article class="post-card">
+                            <div class="post-header">
+                                <strong class="post-author">@<%= post.user.username %></strong>
+                                <span class="post-date">
+                                    <%= new Date(post.createdAt).toLocaleString('pt-BR') %>
+                                </span>
+                            </div>
+                            
+                            <div class="post-content">
+                                <%= post.content %>
+                            </div>
+                            
+                            <div class="post-actions">
+                                <% if (user) { %>
+                                    <form action="/posts/<%= post._id %>/like" method="POST" class="like-form">
+                                        <button type="submit" class="btn-like <%= post.likes.includes(user.id) ? 'liked' : '' %>">
+                                            ♥ <%= post.likes.length %>
+                                        </button>
+                                    </form>
+                                    
+                                    <form action="/posts/<%= post._id %>/comment" method="POST" class="comment-form">
+                                        <input 
+                                            type="text" 
+                                            name="content" 
+                                            placeholder="Escreva um comentário..." 
+                                            maxlength="280"
+                                            required
+                                        >
+                                        <button type="submit" class="btn btn-small">Comentar</button>
+                                    </form>
+                                <% } else { %>
+                                    <div class="post-stats">
+                                        <span class="likes-count">♥ <%= post.likes.length %> curtidas</span>
+                                        <span class="comments-count">💬 <%= post.comments.length %> comentários</span>
+                                    </div>
+                                <% } %>
+                            </div>
+                            
+                            <% if (post.comments.length > 0) { %>
+                                <div class="post-comments">
+                                    <h4>Comentários (<%= post.commentCount || post.comments.length %>):</h4>
+                                    <% post.comments.forEach(comment => { %>
+                                        <div class="comment">
+                                            <strong>@<%= comment.user.username %></strong>
+                                            <span class="comment-content"><%= comment.content %></span>
+                                            <small class="comment-date">
+                                                <%= new Date(comment.createdAt).toLocaleString('pt-BR') %>
+                                            </small>
+                                            <% if (user && user.id === comment.user._id.toString()) { %>
+                                                <form action="/posts/comment/<%= comment._id %>/delete" method="POST" class="delete-comment-form">
+                                                    <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja deletar este comentário?')">×</button>
+                                                </form>
+                                            <% } %>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            <% } %>
+                        </article>
+                    <% }) %>
+                <% } %>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Character counter
+        const textarea = document.querySelector('.post-form textarea');
+        const charCount = document.querySelector('.char-count');
+        
+        if (textarea && charCount) {
+            textarea.addEventListener('input', function() {
+                charCount.textContent = `${this.value.length}/280`;
+            });
+        }
+
+        // Auto-hide alerts
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.display = 'none';
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

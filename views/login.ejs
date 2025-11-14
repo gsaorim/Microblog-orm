@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Microblog</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <a href="/">🐦 Microblog</a>
+            </h1>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <% if (success) { %>
+                <div class="alert alert-success">
+                    <%= success %>
+                </div>
+            <% } %>
+            
+            <% if (error) { %>
+                <div class="alert alert-error">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2>Entrar no Microblog</h2>
+                    
+                    <form action="/auth/login" method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                value="<%= email || '' %>"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Senha:</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                required
+                            >
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                    </form>
+                    
+                    <p class="auth-link">
+                        Não tem uma conta? <a href="/auth/register">Registre-se aqui</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
