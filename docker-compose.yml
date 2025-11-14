@@ -2,41 +2,33 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: microblog-postgres
-    environment:
-      POSTGRES_DB: microblog
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
     ports:
-      - "5432:5432"
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./projeto.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - mongo_data:/data/db
 
-  app:
+  microblog-app:
     build: .
     container_name: microblog-app
-    depends_on:
-      postgres:
-        condition: service_healthy
+    command: node server.js
+    ports:
+      - 3000:3000
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: microblog
-      DB_USER: postgres
-      DB_PASSWORD: 123456
+      - MONGO_URI=mongodb://admin:admin123@mongodb:27017/microblog?authSource=admin
+    depends_on:
+      - mongodb
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
-    command: node server.js 
 
 volumes:
-  postgres_data:
+  mongo_data:
+
+
 
