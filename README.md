@@ -28,18 +28,23 @@ cd Microblog-orm
 Parar containers existentes (se houver)
 #### docker-compose down
 
+
 Reconstruir e executar
 #### docker-compose up -d
+
 
 ### 3. Verifique se está funcionando
 Ver os logs da aplicação
 #### docker logs microblog-app
 
+
 Verifique se os containers estão rodando
 #### docker ps
 
+
 ### 4. Acesse a aplicação
 #### Abra no navegador: http://localhost:3000
+
 
 
 
