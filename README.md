@@ -20,26 +20,23 @@ Sistema de microblogging feito com Node.js + Express + EJS + MongoDB, pronto par
 
 ### 🐳 Execução com Docker 
 
---bash
 ### 1. Clone o projeto
 git clone https://github.com/gsaorim/Microblog-orm.git
 cd Microblog-orm
 
-# Parar containers existentes
+### 2. Execute a aplicação
+# Parar containers existentes (se houver)
 docker-compose down
 
 # Reconstruir e executar
 docker-compose up -d
 
-# Verificar se está funcionando
+### 3. Verifique se está funcionando
+# Ver os logs da aplicação
 docker logs microblog-app
 
 # Verifique se os containers estão rodando
 docker ps
 
-#Veja os logs completos
-docker logs microblog-app --follow
-
-Acesse: http://localhost:3000
-
-
+### 4. Acesse a aplicação
+# Abra no navegador: http://localhost:3000
