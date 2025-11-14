@@ -25,7 +25,7 @@ git clone https://github.com/gsaorim/Microblog-orm.git
 cd Microblog-orm
 
 ### 2. Execute a aplicação
-#Parar containers existentes (se houver)
+# Parar containers existentes (se houver)
 docker-compose down
 
 #Reconstruir e executar
@@ -40,4 +40,5 @@ docker ps
 
 ### 4. Acesse a aplicação
 # Abra no navegador: http://localhost:3000
+
 
