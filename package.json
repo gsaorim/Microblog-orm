@@ -1,17 +1,23 @@
 {
-    "name": "microblog-orm",
-    "version": "1.0.0",
-    "description": "Biblioteca ORM para microblogging",
-    "main": "scr/index.js",
-    "type": "module",
-    "scripts": {
-        "start": "node index.js",
-        "test": "node index.js",
-        "demo": "node index.js"
-    },
-    "dependencies": {
-        "pg": "^8.16.3"
-    }
+  "name": "microblog-express",
+  "version": "1.0.0",
+  "description": "Projeto 2 - Microblog com Express.js e MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "ejs": "^3.1.9",
+    "express-session": "^1.17.3",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
+
 
 
